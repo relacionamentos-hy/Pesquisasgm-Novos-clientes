@@ -1,118 +1,731 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Avaliação Novos Clientes</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        .form-container {
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 500px;
-        }
-        h2 {
-            margin-bottom: 20px;
-            color: #333;
-            text-align: center;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            color: #555;
-            font-weight: bold;
-        }
-        input[type="text"],
-        select,
-        textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 14px;
-        }
-        textarea {
-            resize: vertical;
-            height: 100px;
-        }
-        button {
-            width: 100%;
-            padding: 12px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gostinho Mineiro · Pesquisa de Novos Clientes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --forno-900:#B7261F;
+    --forno-800:#A11F19;
+    --forno-700:#8A1B15;
+    --masa-100:#F4E9D8;
+    --masa-050:#FBF3E6;
+    --crosta-500:#FFC72C;
+    --crosta-600:#F0A800;
+    --crosta-300:#FFDD70;
+    --campo-500:#7C8C5C;
+    --campo-300:#A9B885;
+    --erro-500:#C25B4A;
+    --text-on-dark:#F4E9D8;
+    --text-on-dark-muted:#C9B79E;
+    --radius-card:20px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background: var(--forno-900);
+    background-image:
+      radial-gradient(circle at 15% 8%, rgba(255,199,44,0.14), transparent 45%),
+      radial-gradient(circle at 90% 85%, rgba(255,199,44,0.08), transparent 40%);
+    color: var(--text-on-dark);
+    font-family: 'Work Sans', sans-serif;
+    min-height: 100vh;
+    display:flex;
+    align-items:flex-start;
+    justify-content:center;
+    padding: 40px 16px 80px;
+  }
+  .app{
+    width:100%;
+    max-width: 560px;
+  }
+  .brand{
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+    margin-bottom: 28px;
+  }
+  .brand .mark{
+    font-family:'Fraunces', serif;
+    font-weight:700;
+    font-size:15px;
+    letter-spacing:0.04em;
+    color: var(--crosta-500);
+    text-transform: uppercase;
+  }
+  .brand .sub{
+    font-size:12px;
+    color: var(--text-on-dark-muted);
+    letter-spacing:0.03em;
+  }
+  h1.hero{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size: 30px;
+    line-height:1.15;
+    margin: 0 0 8px;
+    color: var(--masa-050);
+  }
+  p.hero-sub{
+    font-size:15px;
+    color: var(--text-on-dark-muted);
+    margin: 0 0 32px;
+    line-height:1.5;
+  }
+
+  /* progress: baking tray of pão de queijo */
+  .tray{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom: 36px;
+  }
+  .ball-wrap{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:6px;
+    flex:1;
+  }
+  .ball{
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    background: var(--forno-700);
+    border: 1.5px solid rgba(244,233,216,0.18);
+    transition: background .4s ease, border-color .4s ease, transform .3s ease;
+  }
+  .ball.done{
+    background: radial-gradient(circle at 35% 30%, var(--crosta-300), var(--crosta-600) 75%);
+    border-color: var(--crosta-600);
+  }
+  .ball.current{
+    border-color: var(--crosta-500);
+    transform: scale(1.12);
+    box-shadow: 0 0 0 4px rgba(227,165,66,0.15);
+  }
+  .tray-label{
+    font-size:10.5px;
+    color: var(--text-on-dark-muted);
+    text-align:center;
+    letter-spacing:0.02em;
+  }
+  .tray-line{
+    flex:0.4;
+    height:1.5px;
+    background: rgba(244,233,216,0.15);
+    margin-top: -20px;
+  }
+
+  .card{
+    background: var(--forno-800);
+    border: 1px solid rgba(244,233,216,0.10);
+    border-radius: var(--radius-card);
+    padding: 30px 26px;
+    animation: rise .35s ease;
+  }
+  @keyframes rise{
+    from{opacity:0; transform: translateY(8px);}
+    to{opacity:1; transform: translateY(0);}
+  }
+  .step-eyebrow{
+    font-size:11.5px;
+    text-transform:uppercase;
+    letter-spacing:0.09em;
+    color: var(--crosta-500);
+    font-weight:600;
+    margin-bottom:6px;
+  }
+  .step-title{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:21px;
+    color: var(--masa-050);
+    margin: 0 0 22px;
+    line-height:1.3;
+  }
+
+  .field{ margin-bottom: 20px; }
+  .field:last-child{ margin-bottom:0; }
+  .field label{
+    display:block;
+    font-size:13.5px;
+    color: var(--text-on-dark-muted);
+    margin-bottom: 8px;
+  }
+  .field .hint{
+    font-size:12px;
+    color: rgba(201,183,158,0.7);
+    margin-top:6px;
+  }
+  input[type=text], input[type=tel], textarea{
+    width:100%;
+    background: rgba(244,233,216,0.06);
+    border: 1px solid rgba(244,233,216,0.18);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 15px;
+    color: var(--masa-050);
+    font-family:'Work Sans', sans-serif;
+    outline:none;
+    transition: border-color .2s ease, background .2s ease;
+  }
+  input::placeholder, textarea::placeholder{ color: rgba(201,183,158,0.5); }
+  input:focus, textarea:focus{
+    border-color: var(--crosta-500);
+    background: rgba(244,233,216,0.09);
+  }
+  textarea{ min-height: 130px; resize: vertical; line-height:1.5; }
+  .field.error input, .field.error textarea{ border-color: var(--erro-500); }
+  .error-msg{ font-size:12px; color: #E8998A; margin-top:6px; display:none; }
+  .field.error .error-msg{ display:block; }
+
+  .check-list{ display:flex; flex-direction:column; gap:10px; }
+  .check-item{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    padding: 13px 14px;
+    border: 1px solid rgba(244,233,216,0.15);
+    border-radius: 12px;
+    cursor:pointer;
+    transition: border-color .2s ease, background .2s ease;
+    background: rgba(244,233,216,0.03);
+  }
+  .check-item:hover{ border-color: rgba(244,233,216,0.3); }
+  .check-item.checked{
+    border-color: var(--crosta-500);
+    background: rgba(227,165,66,0.10);
+  }
+  .check-item input{ display:none; }
+  .check-box{
+    width:19px; height:19px;
+    border-radius:5px;
+    border: 1.5px solid rgba(244,233,216,0.35);
+    flex-shrink:0;
+    margin-top:2px;
+    display:flex; align-items:center; justify-content:center;
+    transition: background .2s ease, border-color .2s ease;
+  }
+  .check-item.checked .check-box{
+    background: var(--crosta-500);
+    border-color: var(--crosta-500);
+  }
+  .check-box svg{ width:12px; height:12px; opacity:0; transition:opacity .15s ease; }
+  .check-item.checked .check-box svg{ opacity:1; }
+  .check-text{ font-size:14.5px; line-height:1.4; color: var(--masa-050); }
+
+  .mood-grid{ display:flex; flex-direction:column; gap:10px; }
+  .mood-item{
+    display:flex; align-items:center; gap:14px;
+    padding: 14px 16px;
+    border:1px solid rgba(244,233,216,0.15);
+    border-radius:12px;
+    cursor:pointer;
+    background: rgba(244,233,216,0.03);
+    transition: border-color .2s ease, background .2s ease;
+  }
+  .mood-item:hover{ border-color: rgba(244,233,216,0.3); }
+  .mood-item.selected{
+    border-color: var(--crosta-500);
+    background: rgba(227,165,66,0.10);
+  }
+  .mood-emoji{ font-size:24px; line-height:1; }
+  .mood-text{ font-size:14.5px; color: var(--masa-050); }
+
+  .scale-wrap{ margin-top: 28px; }
+  .scale-row{
+    display:flex; gap:6px; justify-content:space-between;
+  }
+  .scale-btn{
+    width: 30px; height: 40px;
+    border-radius: 8px;
+    border: 1px solid rgba(244,233,216,0.18);
+    background: rgba(244,233,216,0.04);
+    color: var(--masa-050);
+    font-family:'Work Sans', sans-serif;
+    font-size:13px;
+    font-weight:500;
+    cursor:pointer;
+    transition: all .15s ease;
+  }
+  .scale-btn:hover{ border-color: rgba(244,233,216,0.4); }
+  .scale-btn.selected{
+    background: var(--crosta-500);
+    border-color: var(--crosta-500);
+    color: var(--forno-900);
+    transform: translateY(-2px);
+  }
+  .scale-labels{
+    display:flex; justify-content:space-between;
+    font-size:11.5px; color: var(--text-on-dark-muted);
+    margin-top:8px;
+  }
+
+  .nav-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    margin-top: 30px;
+  }
+  button.nav-btn{
+    font-family:'Work Sans', sans-serif;
+    font-size: 14.5px;
+    font-weight:500;
+    border-radius: 10px;
+    padding: 12px 20px;
+    cursor:pointer;
+    border:1px solid transparent;
+    transition: all .15s ease;
+  }
+  .btn-back{
+    background: transparent;
+    border-color: rgba(244,233,216,0.2);
+    color: var(--text-on-dark-muted);
+  }
+  .btn-back:hover{ border-color: rgba(244,233,216,0.4); color: var(--masa-050); }
+  .btn-back:disabled{ opacity:0; pointer-events:none; }
+  .btn-next{
+    background: var(--crosta-500);
+    color: var(--forno-900);
+    flex:1;
+    text-align:center;
+    font-weight:600;
+  }
+  .btn-next:hover{ background: var(--crosta-300); }
+
+  .done-screen{ text-align:center; padding: 10px 4px; }
+  .done-icon{ font-size:44px; margin-bottom:14px; }
+  .done-title{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size: 24px;
+    color: var(--masa-050);
+    margin: 0 0 10px;
+  }
+  .done-sub{
+    font-size:14.5px;
+    color: var(--text-on-dark-muted);
+    line-height:1.6;
+    margin: 0 0 26px;
+  }
+  .restart-btn{
+    background: transparent;
+    border:1px solid rgba(244,233,216,0.25);
+    color: var(--masa-050);
+    padding: 11px 22px;
+    border-radius:10px;
+    font-size:14px;
+    cursor:pointer;
+  }
+  .restart-btn:hover{ border-color: var(--crosta-500); color: var(--crosta-500); }
+
+  .footer-note{
+    text-align:center;
+    font-size:11.5px;
+    color: rgba(201,183,158,0.5);
+    margin-top: 22px;
+  }
+
+  @media (max-width: 400px){
+    .card{ padding: 24px 18px; }
+    .step-title{ font-size:19px; }
+    .scale-btn{ width: 24px; }
+  }
+</style>
 </head>
 <body>
+<div class="app">
+  <div class="brand">
+    <span class="mark">Gostinho Mineiro</span>
+    <span class="sub">· pesquisa de novos clientes</span>
+  </div>
 
-<div class="form-container">
-    <h2>Avaliação de Novos Clientes</h2>
-    
-    <form id="formAvaliacao" method="POST" action="https://script.google.com/macros/s/AKfycbzIwlc1Ap1wWkpDfhSStNISC-XfJujtSZmd4no9vh9Hp-dLVQ6Vvb1cmGQc8rt9FoJlvw/exec">
-        
-        <div class="form-group">
-            <label for="nome">Nome:</label>
-            <input type="text" id="nome" name="nome" required placeholder="Digite seu nome completo">
-        </div>
+  <h1 class="hero" id="hero-title">Conta pra gente como foi sua experiência</h1>
+  <p class="hero-sub" id="hero-sub">Leva menos de 2 minutos e ajuda a gente a assar coisas ainda melhores.</p>
 
-        <div class="form-group">
-            <label for="cpf_cnpj">CPF / CNPJ:</label>
-            <input type="text" id="cpf_cnpj" name="cpf_cnpj" placeholder="Digite seu CPF ou CNPJ">
-        </div>
+  <div class="tray" id="tray"></div>
 
-        <div class="form-group">
-            <label for="produtos">Produtos Comprados:</label>
-            <input type="text" id="produtos" name="produtos" placeholder="Ex: Produto A, Produto B">
-        </div>
+  <div class="card" id="card"></div>
 
-        <div class="form-group">
-            <label for="experiencia">Experiência Geral:</label>
-            <select id="experiencia" name="experiencia">
-                <option value="">Selecione...</option>
-                <option value="Excelente">Excelente</option>
-                <option value="Bom">Bom</option>
-                <option value="Regular">Regular</option>
-                <option value="Ruim">Ruim</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label for="nps">Recompra (NPS - De 0 a 10):</label>
-            <input type="text" id="nps" name="nps" placeholder="Ex: 10">
-        </div>
-
-        <div class="form-group">
-            <label for="feedback">Feedbacks / Sugestões:</label>
-            <textarea id="feedback" name="feedback" placeholder="Deixe seu comentário..."></textarea>
-        </div>
-
-        <button type="submit">Enviar Resposta</button>
-    </form>
+  <p class="footer-note" id="footer-note">Passo <span id="step-current">1</span> de 4</p>
 </div>
 
+<script>
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzIwlc1Ap1wWkpDfhSStNISC-XfJujtSZmd4no9vh9Hp-dLVQ6Vvb1cmGQc8rt9FoJlvw/exec';
+
+const state = {
+  step: 0,
+  nome: '',
+  documento: '',
+  produtos: [],
+  experiencia: '',
+  nota: null,
+  feedback: ''
+};
+
+const produtoOpcoes = [
+  'Pão de Queijo (Tradicional, GG, Forno Quente, Ímpares ou Especiais)',
+  'Pão de Queijo Recheado ou Gourmet',
+  'Biscoitos de Queijo, Chipa ou Sabor da Fazenda',
+  'Broa de Milho',
+  'Salgadinhos de Festa / Mini Pastéis / Pastelão',
+  'Pães Diversos (Francês, Massa Doce, etc.)',
+  'Outros (Dadinho de Tapioca, Pão de Tapioca, Hot Cheese, etc.)'
+];
+
+const experienciaOpcoes = [
+  {emoji:'🤤', text:'Incrível, derrete na boca!', value:'incrivel'},
+  {emoji:'👍', text:'Bom, atendeu às expectativas.', value:'bom'},
+  {emoji:'😕', text:'Mediano / precisa melhorar.', value:'mediano'}
+];
+
+const totalSteps = 4;
+const tray = document.getElementById('tray');
+const card = document.getElementById('card');
+const stepCurrentLabel = document.getElementById('step-current');
+const trayLabels = ['Identificação','Consumo','Avaliação','Feedback'];
+
+function renderTray(){
+  tray.innerHTML = '';
+  for(let i=0;i<totalSteps;i++){
+    const wrap = document.createElement('div');
+    wrap.className = 'ball-wrap';
+    const ball = document.createElement('div');
+    ball.className = 'ball' + (i < state.step ? ' done' : '') + (i === state.step ? ' current' : '');
+    const label = document.createElement('div');
+    label.className = 'tray-label';
+    label.textContent = trayLabels[i];
+    wrap.appendChild(ball);
+    wrap.appendChild(label);
+    tray.appendChild(wrap);
+    if(i < totalSteps - 1){
+      const line = document.createElement('div');
+      line.className = 'tray-line';
+      tray.appendChild(line);
+    }
+  }
+  stepCurrentLabel.textContent = state.step + 1;
+}
+
+function renderStep(){
+  renderTray();
+  card.innerHTML = '';
+
+  if(state.step === 0) renderStep1();
+  else if(state.step === 1) renderStep2();
+  else if(state.step === 2) renderStep3();
+  else if(state.step === 3) renderStep4();
+}
+
+function makeNav(onNext, nextLabel){
+  const nav = document.createElement('div');
+  nav.className = 'nav-row';
+
+  const back = document.createElement('button');
+  back.className = 'nav-btn btn-back';
+  back.textContent = '← Voltar';
+  back.disabled = state.step === 0;
+  back.onclick = () => { state.step--; renderStep(); };
+
+  const next = document.createElement('button');
+  next.className = 'nav-btn btn-next';
+  next.textContent = nextLabel || 'Continuar →';
+  next.onclick = onNext;
+
+  nav.appendChild(back);
+  nav.appendChild(next);
+  return nav;
+}
+
+function renderStep1(){
+  const eyebrow = document.createElement('div');
+  eyebrow.className = 'step-eyebrow';
+  eyebrow.textContent = 'Passo 1';
+  const title = document.createElement('div');
+  title.className = 'step-title';
+  title.textContent = 'Identificação';
+  card.appendChild(eyebrow);
+  card.appendChild(title);
+
+  const f1 = document.createElement('div');
+  f1.className = 'field';
+  f1.innerHTML = `
+    <label>Qual é o seu nome?</label>
+    <input type="text" id="in-nome" placeholder="Nome completo" value="${escapeHtml(state.nome)}">
+    <div class="error-msg">Precisamos do seu nome para continuar.</div>
+  `;
+  card.appendChild(f1);
+
+  const f2 = document.createElement('div');
+  f2.className = 'field';
+  f2.innerHTML = `
+    <label>Qual é o seu CPF ou CNPJ?</label>
+    <input type="text" id="in-doc" placeholder="000.000.000-00" value="${escapeHtml(state.documento)}" inputmode="numeric">
+    <div class="hint">Essencial para cruzarmos com o histórico de vendas de vocês.</div>
+    <div class="error-msg">Informe um CPF ou CNPJ válido.</div>
+  `;
+  card.appendChild(f2);
+
+  const docInput = f2.querySelector('#in-doc');
+  docInput.addEventListener('input', (e) => {
+    e.target.value = formatDocumento(e.target.value);
+  });
+
+  card.appendChild(makeNav(() => {
+    const nomeInput = f1.querySelector('#in-nome');
+    const docVal = docInput.value.replace(/\D/g,'');
+    let ok = true;
+
+    if(nomeInput.value.trim().length < 2){
+      f1.classList.add('error'); ok = false;
+    } else { f1.classList.remove('error'); }
+
+    if(docVal.length !== 11 && docVal.length !== 14){
+      f2.classList.add('error'); ok = false;
+    } else { f2.classList.remove('error'); }
+
+    if(!ok) return;
+
+    state.nome = nomeInput.value.trim();
+    state.documento = docInput.value.trim();
+    state.step++;
+    renderStep();
+  }));
+}
+
+function renderStep2(){
+  const eyebrow = document.createElement('div');
+  eyebrow.className = 'step-eyebrow';
+  eyebrow.textContent = 'Passo 2';
+  const title = document.createElement('div');
+  title.className = 'step-title';
+  title.textContent = 'Quais produtos você comprou ou experimentou dessa vez?';
+  card.appendChild(eyebrow);
+  card.appendChild(title);
+
+  const errorMsg = document.createElement('div');
+  errorMsg.className = 'error-msg';
+  errorMsg.style.marginBottom = '14px';
+  errorMsg.textContent = 'Escolha pelo menos um produto.';
+
+  const list = document.createElement('div');
+  list.className = 'check-list';
+
+  produtoOpcoes.forEach((opt) => {
+    const item = document.createElement('label');
+    item.className = 'check-item' + (state.produtos.includes(opt) ? ' checked' : '');
+    item.innerHTML = `
+      <input type="checkbox" ${state.produtos.includes(opt) ? 'checked' : ''}>
+      <span class="check-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="${getComputedStyle(document.body).getPropertyValue('--forno-900')}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </span>
+      <span class="check-text">${opt}</span>
+    `;
+    item.onclick = (e) => {
+      e.preventDefault();
+      const i = state.produtos.indexOf(opt);
+      if(i > -1) state.produtos.splice(i,1);
+      else state.produtos.push(opt);
+      item.classList.toggle('checked');
+      item.querySelector('input').checked = state.produtos.includes(opt);
+      if(state.produtos.length) errorMsg.style.display = 'none';
+    };
+    list.appendChild(item);
+  });
+
+  card.appendChild(list);
+  card.appendChild(errorMsg);
+
+  card.appendChild(makeNav(() => {
+    if(state.produtos.length === 0){
+      errorMsg.style.display = 'block';
+      return;
+    }
+    state.step++;
+    renderStep();
+  }));
+}
+
+function renderStep3(){
+  const eyebrow = document.createElement('div');
+  eyebrow.className = 'step-eyebrow';
+  eyebrow.textContent = 'Passo 3';
+  const title = document.createElement('div');
+  title.className = 'step-title';
+  title.textContent = 'A experiência e avaliação';
+  card.appendChild(eyebrow);
+  card.appendChild(title);
+
+  const q1label = document.createElement('label');
+  q1label.textContent = 'Como foi a experiência com os produtos que você escolheu?';
+  q1label.style.cssText = 'display:block; font-size:13.5px; color:var(--text-on-dark-muted); margin-bottom:12px;';
+  card.appendChild(q1label);
+
+  const moodGrid = document.createElement('div');
+  moodGrid.className = 'mood-grid';
+  experienciaOpcoes.forEach(opt => {
+    const item = document.createElement('div');
+    item.className = 'mood-item' + (state.experiencia === opt.value ? ' selected' : '');
+    item.innerHTML = `<span class="mood-emoji">${opt.emoji}</span><span class="mood-text">${opt.text}</span>`;
+    item.onclick = () => {
+      state.experiencia = opt.value;
+      moodGrid.querySelectorAll('.mood-item').forEach(el => el.classList.remove('selected'));
+      item.classList.add('selected');
+      moodError.style.display = 'none';
+    };
+    moodGrid.appendChild(item);
+  });
+  card.appendChild(moodGrid);
+  const moodError = document.createElement('div');
+  moodError.className = 'error-msg';
+  moodError.style.marginTop = '8px';
+  moodError.textContent = 'Selecione uma opção.';
+  card.appendChild(moodError);
+
+  const scaleWrap = document.createElement('div');
+  scaleWrap.className = 'scale-wrap';
+  const scaleLabel = document.createElement('label');
+  scaleLabel.textContent = 'De 0 a 10, quais são as chances de você comprar com a gente de novo ou indicar a Gostinho Mineiro?';
+  scaleLabel.style.cssText = 'display:block; font-size:13.5px; color:var(--text-on-dark-muted); margin-bottom:14px;';
+  scaleWrap.appendChild(scaleLabel);
+
+  const scaleRow = document.createElement('div');
+  scaleRow.className = 'scale-row';
+  for(let n=0; n<=10; n++){
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'scale-btn' + (state.nota === n ? ' selected' : '');
+    btn.textContent = n;
+    btn.onclick = () => {
+      state.nota = n;
+      scaleRow.querySelectorAll('.scale-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      scaleError.style.display = 'none';
+    };
+    scaleRow.appendChild(btn);
+  }
+  scaleWrap.appendChild(scaleRow);
+
+  const scaleLabels = document.createElement('div');
+  scaleLabels.className = 'scale-labels';
+  scaleLabels.innerHTML = '<span>Pouco provável</span><span>Certamente sim</span>';
+  scaleWrap.appendChild(scaleLabels);
+
+  const scaleError = document.createElement('div');
+  scaleError.className = 'error-msg';
+  scaleError.style.marginTop = '10px';
+  scaleError.textContent = 'Escolha uma nota de 0 a 10.';
+  scaleWrap.appendChild(scaleError);
+
+  card.appendChild(scaleWrap);
+
+  card.appendChild(makeNav(() => {
+    let ok = true;
+    if(!state.experiencia){ moodError.style.display = 'block'; ok = false; }
+    if(state.nota === null){ scaleError.style.display = 'block'; ok = false; }
+    if(!ok) return;
+    state.step++;
+    renderStep();
+  }));
+}
+
+function renderStep4(){
+  const eyebrow = document.createElement('div');
+  eyebrow.className = 'step-eyebrow';
+  eyebrow.textContent = 'Passo 4';
+  const title = document.createElement('div');
+  title.className = 'step-title';
+  title.textContent = 'Espaço de feedbacks';
+  card.appendChild(eyebrow);
+  card.appendChild(title);
+
+  const field = document.createElement('div');
+  field.className = 'field';
+  field.innerHTML = `
+    <label>Deixe seu feedback, elogio ou sugestão sobre os produtos e o atendimento</label>
+    <textarea id="in-feedback" placeholder="Escreva à vontade...">${escapeHtml(state.feedback)}</textarea>
+  `;
+  card.appendChild(field);
+
+  card.appendChild(makeNav(async () => {
+    state.feedback = field.querySelector('#in-feedback').value.trim();
+    await submitSurvey();
+    renderDone();
+  }, 'Enviar pesquisa'));
+}
+
+async function submitSurvey(){
+  try{
+    const dados = {
+      nome: state.nome,
+      documento: state.documento,
+      produtos: state.produtos.join(', '),
+      experiencia: state.experiencia,
+      nota: state.nota,
+      feedback: state.feedback,
+      enviado_em: new Date().toISOString()
+    };
+
+    // Envio para o Google Sheets via fetch com no-cors
+    await fetch(SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(dados)
+    });
+  }catch(err){
+    console.error('Falha ao enviar resposta:', err);
+  }
+}
+
+function renderDone(){
+  tray.innerHTML = '';
+  card.innerHTML = `
+    <div class="done-screen">
+      <div class="done-icon">🧀</div>
+      <div class="done-title">Valeu, ${escapeHtml(state.nome.split(' ')[0] || '')}!</div>
+      <div class="done-sub">Sua resposta foi registrada. Esse carinho ajuda a gente a manter o forno sempre quentinho.</div>
+      <button class="restart-btn" id="btn-restart">Responder novamente</button>
+    </div>
+  `;
+  document.getElementById('footer-note').style.display = 'none';
+  document.getElementById('btn-restart').onclick = () => {
+    state.step = 0;
+    state.nome = ''; state.documento = ''; state.produtos = [];
+    state.experiencia = ''; state.nota = null; state.feedback = '';
+    document.getElementById('footer-note').style.display = 'block';
+    renderStep();
+  };
+}
+
+function formatDocumento(v){
+  const d = v.replace(/\D/g,'').slice(0,14);
+  if(d.length <= 11){
+    return d
+      .replace(/(\d{3})(\d)/,'$1.$2')
+      .replace(/(\d{3})(\d)/,'$1.$2')
+      .replace(/(\d{3})(\d{1,2})$/,'$1-$2');
+  }
+  return d
+    .replace(/(\d{2})(\d)/,'$1.$2')
+    .replace(/(\d{3})(\d)/,'$1.$2')
+    .replace(/(\d{3})(\d)/,'$1/$2')
+    .replace(/(\d{4})(\d{1,2})$/,'$1-$2');
+}
+
+function escapeHtml(str){
+  return (str || '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
+
+renderStep();
+</script>
 </body>
 </html>
