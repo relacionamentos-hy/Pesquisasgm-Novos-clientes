@@ -690,7 +690,7 @@ function renderDone(){
   card.innerHTML = `
     <div class="done-screen">
       <div class="done-icon">🧀</div>
-      <div class="done-title">Valeu, ${escapeHtml(state.nome.save ? '' : (state.nome.split(' ')[0] || ''))}!</div>
+      <div class="done-title">Valeu, ${escapeHtml(state.nome.split(' ')[0] || '')}!</div>
       <div class="done-sub">Sua resposta foi registrada. Esse carinho ajuda a gente a manter o forno sempre quentinho.</div>
       <button class="restart-btn" id="btn-restart">Responder novamente</button>
     </div>
